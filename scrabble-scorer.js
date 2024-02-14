@@ -40,17 +40,17 @@ console.log(oldScrabbleScorer(initialPrompt()));
 //   return word;
 // }
 
-function simpleScorer(initialPrompt) {
+function simpleScorer(word) {
   let points = 0;
   for (i = 0; i < word.length; i++) {
     points++;
   }
   return points;
 }
-console.log(simpleScorer());
+console.log(simpleScorer(word));
 
 // let vowelBonusScorer;
-function vowelBonusScorer(initialPrompt) {
+function vowelBonusScorer(word) {
   let score = 0;
   const vowels = ["a", "e", "i", "o", "u"];
   for (let i = 0; i < word.length; i++) {
@@ -64,11 +64,27 @@ function vowelBonusScorer(initialPrompt) {
   return score;
 }
 
-console.log(vowelBonusScorer());
+console.log(vowelBonusScorer(word));
 
 let scrabbleScorer;
 
-const scoringAlgorithms = [];
+const scoringAlgorithms = [
+   {
+      name: 'Simple Score',
+      description: 'Each letter is worth 1 point.',
+      scoringFunction: simpleScorer(word)
+   },
+   {
+      name: 'Bonus Vowels',
+      description: 'Vowels are worth 3 point, consoanants are worth 1 point.',
+      scoringFunction: vowelBonusScorer(word)
+   },
+   {
+      name: 'Scrabble',
+      description: 'The traditional scoring algorithm.',
+      scoringFunction: oldScrabbleScorer(word)
+   }
+];
 
 function scorerPrompt() {}
 
