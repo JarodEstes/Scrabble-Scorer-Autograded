@@ -12,10 +12,12 @@ const oldPointStructure = {
   10: ["Q", "Z"],
 };
 function initialPrompt() {
-   word = input.question("Let's play some scrabble! Enter a word: ");
+   let word = input.question("Let's play some scrabble! Enter a word: ");
    word = word.toLowerCase();
    return word;
 }
+let word = initialPrompt();
+
 
 function oldScrabbleScorer(word) {
   word = word.toUpperCase();
@@ -30,7 +32,7 @@ function oldScrabbleScorer(word) {
   }
   return letterPoints;
 }
-console.log(oldScrabbleScorer(initialPrompt()));
+console.log(oldScrabbleScorer(word));
 // your job is to finish writing these functions and variables that we've named //
 // don't change the names or your program won't work as expected. //
 
@@ -72,22 +74,42 @@ const scoringAlgorithms = [
    {
       name: 'Simple Score',
       description: 'Each letter is worth 1 point.',
-      scoringFunction: simpleScorer(word)
+      scoringFunction: simpleScorer
    },
    {
       name: 'Bonus Vowels',
       description: 'Vowels are worth 3 point, consoanants are worth 1 point.',
-      scoringFunction: vowelBonusScorer(word)
+      scoringFunction: vowelBonusScorer
    },
    {
       name: 'Scrabble',
       description: 'The traditional scoring algorithm.',
-      scoringFunction: oldScrabbleScorer(word)
+      scoringFunction: oldScrabbleScorer
    }
 ];
 
-function scorerPrompt() {}
+function scorerPrompt() {
+   // let scoringWord = input.question("Enter a word that you'd like to be scored: ");
 
+console.log(`
+0 - ${scoringAlgorithms[0].name}: ${scoringAlgorithms[0].description}
+1 - ${scoringAlgorithms[1].name}: ${scoringAlgorithms[1].description}
+2 - ${scoringAlgorithms[2].name}: ${scoringAlgorithms[2].description}`)
+let scoreChoice = input.question('Please enter which scoring function you want: ');
+
+console.log(`Score for ${word}: ${scoringAlgorithms[scoreChoice].scoringFunction(word)}`)
+
+   // scoringAlgo = input.question(`Select a scoring algorithm:\n0 - Simple Scorer\n1 - Vowel Bonus Scorer\n2 - Scrabble Scorer\n`);
+   // if (scoringAlgo === 0){
+   //    return simpleScorer(initialPrompt());
+   // } else if (scoringAlgo === 1){
+   //    return vowelBonusScorer(word);
+   // } else if (scoringAlgo === 2){
+   //    return oldScrabbleScorer(word);
+   // }
+   // console.log(`Score for ${word}: ${}`)
+}
+console.log(scorerPrompt())
 function transform() {}
 
 let newPointStructure = {"a": 1, "b": 3, "c": 3, "d": 2, "e": 1, "f": 4, "g": 2, "h": 4, "i": 1, "j": 8, "k": 5, "l": 1, "m": 3, "n": 1, "o": 1, "p": 3, "q": 10, "r": 1, "s": 1, "t": 1, "u": 1, "v": 4, "w": 4, "x": 8, "y": 4, "z": 10};
