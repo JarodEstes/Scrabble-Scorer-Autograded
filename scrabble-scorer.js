@@ -11,13 +11,14 @@ const oldPointStructure = {
   8: ["J", "X"],
   10: ["Q", "Z"],
 };
+
+let word = '';
+
 function initialPrompt() {
-   let word = input.question("Let's play some scrabble! Enter a word: ");
+   word = input.question("Let's play some scrabble! Enter a word: ");
    word = word.toLowerCase();
    return word;
 }
-let word = initialPrompt();
-
 
 function oldScrabbleScorer(word) {
   word = word.toUpperCase();
@@ -32,15 +33,9 @@ function oldScrabbleScorer(word) {
   }
   return letterPoints;
 }
-console.log(oldScrabbleScorer(word));
 // your job is to finish writing these functions and variables that we've named //
 // don't change the names or your program won't work as expected. //
 
-// function initialPrompt() {
-//   word = input.question("Let's play some scrabble! Enter a word: ");
-//   word = word.toLowerCase();
-//   return word;
-// }
 
 function simpleScorer(word) {
   let points = 0;
@@ -49,9 +44,7 @@ function simpleScorer(word) {
   }
   return points;
 }
-console.log(simpleScorer(word));
 
-// let vowelBonusScorer;
 function vowelBonusScorer(word) {
   let score = 0;
   const vowels = ["a", "e", "i", "o", "u"];
@@ -66,56 +59,59 @@ function vowelBonusScorer(word) {
   return score;
 }
 
-console.log(vowelBonusScorer(word));
-
-let scrabbleScorer;
-
 const scoringAlgorithms = [
    {
       name: 'Simple Score',
       description: 'Each letter is worth 1 point.',
-      scoringFunction: simpleScorer
+      scorerFunction: simpleScorer
    },
    {
       name: 'Bonus Vowels',
       description: 'Vowels are worth 3 point, consoanants are worth 1 point.',
-      scoringFunction: vowelBonusScorer
+      scorerFunction: vowelBonusScorer
    },
    {
       name: 'Scrabble',
       description: 'The traditional scoring algorithm.',
-      scoringFunction: oldScrabbleScorer
+      scorerFunction: scrabbleScorer
    }
 ];
 
 function scorerPrompt() {
-   // let scoringWord = input.question("Enter a word that you'd like to be scored: ");
-
-console.log(`
-0 - ${scoringAlgorithms[0].name}: ${scoringAlgorithms[0].description}
-1 - ${scoringAlgorithms[1].name}: ${scoringAlgorithms[1].description}
-2 - ${scoringAlgorithms[2].name}: ${scoringAlgorithms[2].description}`)
-let scoreChoice = input.question('Please enter which scoring function you want: ');
-
-console.log(`Score for ${word}: ${scoringAlgorithms[scoreChoice].scoringFunction(word)}`)
-
-   // scoringAlgo = input.question(`Select a scoring algorithm:\n0 - Simple Scorer\n1 - Vowel Bonus Scorer\n2 - Scrabble Scorer\n`);
-   // if (scoringAlgo === 0){
-   //    return simpleScorer(initialPrompt());
-   // } else if (scoringAlgo === 1){
-   //    return vowelBonusScorer(word);
-   // } else if (scoringAlgo === 2){
-   //    return oldScrabbleScorer(word);
-   // }
-   // console.log(`Score for ${word}: ${}`)
+  console.log("\nWhich scoring algorithm would you like to use? ");
+  for (let i = 0; i < scoringAlgorithms.length; i++) {
+    console.log(`${i} - ${scoringAlgorithms[i].name}: ${scoringAlgorithms[i].description}`);
+  }
+  let choice = Number(input.question("\nEnter: 0, 1, or 2: "));
+  console.log(`\nScore for '${word}': ${scoringAlgorithms[choice].scorerFunction(word)}`)
 }
-console.log(scorerPrompt())
-function transform() {}
 
-let newPointStructure = {"a": 1, "b": 3, "c": 3, "d": 2, "e": 1, "f": 4, "g": 2, "h": 4, "i": 1, "j": 8, "k": 5, "l": 1, "m": 3, "n": 1, "o": 1, "p": 3, "q": 10, "r": 1, "s": 1, "t": 1, "u": 1, "v": 4, "w": 4, "x": 8, "y": 4, "z": 10};
+function transform(oldPointStructure) {
+  let newPointStructure = {};
+  for (let key in oldPointStructure){
+    let letters = oldPointStructure[key];
+    for (let letter of letters) {
+      newPointStructure[letter.toLowerCase()] = Number(key);
+    }
+  }
+  return newPointStructure;
+  }
+
+  let newPointStructure = transform(oldPointStructure);
+
+function scrabbleScorer(word){
+  let score = 0;
+  for (i = 0; i < word.length; i++) {
+    score += newPointStructure[word[i]]
+  }
+  return score;
+}
+// console.log(scrabbleScorer(word))
+
 
 function runProgram() {
-//   initialPrompt();     I commented this out
+  initialPrompt();
+  scorerPrompt();
 }
 
 // Don't write any code below this line //
