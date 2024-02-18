@@ -106,7 +106,6 @@ function scrabbleScorer(word){
   }
   return score;
 }
-// console.log(scrabbleScorer(word))
 
 
 function runProgram() {
